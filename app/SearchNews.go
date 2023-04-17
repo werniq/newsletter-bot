@@ -1,16 +1,17 @@
 package app
 
 import (
-	"duolingo-bot/internal/models"
-	"duolingo-bot/logger"
 	"encoding/json"
 	"fmt"
 	tgbotapi "github.com/go-telegram-bot-api/telegram-bot-api/v5"
 	"net/http"
+	"news-bot/internal/models"
+	"news-bot/logger"
 	"os"
 	"strings"
 )
 
+// SearchNews function is used to search news by categories.
 func (app *Application) SearchNews(bot *tgbotapi.BotAPI, update *tgbotapi.Update) {
 	msg := tgbotapi.NewMessage(update.Message.Chat.ID, "Please, enter the categories you want to get news from. Available categories: business, entertainment, general, health, science, sports, technology.")
 	if _, err := bot.Send(msg); err != nil {

@@ -2,8 +2,8 @@ package Driver
 
 import (
 	"database/sql"
-	"duolingo-bot/logger"
 	_ "github.com/lib/pq"
+	"news-bot/logger"
 	"os"
 )
 

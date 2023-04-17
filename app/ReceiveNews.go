@@ -1,14 +1,12 @@
 package app
 
 import (
-	"duolingo-bot/internal/models"
-	"duolingo-bot/logger"
 	"encoding/json"
 	tgbotapi "github.com/go-telegram-bot-api/telegram-bot-api/v5"
 	"net/http"
+	"news-bot/internal/models"
+	"news-bot/logger"
 )
-
-var uri = "https://newsapi.org/v2/everything"
 
 // ReceiveNews function is used to receive news from the newsapi.org.
 func (app *Application) ReceiveNews(update *tgbotapi.Update, bot *tgbotapi.BotAPI) (*[]models.NewsApiResponse, error) {

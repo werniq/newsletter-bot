@@ -48,3 +48,65 @@ func (m *DatabaseModel) StoreInfoInDatabase(upd tgbotapi.Update) error {
 
 	return nil
 }
+
+// TODO: create table for storing user's preferences for daily mailing!!! And name it "daily_mailing_categories"
+
+// GetDailyMailingCategories function is used to get user's preferences for daily mailing.
+func (m *DatabaseModel) GetDailyMailingCategories(chatID int64) ([]string, error) {
+	stmt := `
+		SELECT 
+		    news_categories
+		FROM 
+		    daily_mailing_categories 
+		WHERE 
+		    chat_id = $1`
+	var newsCategories []string
+	err := m.DB.QueryRow(stmt, chatID).Scan(&newsCategories)
+	if err != nil {
+		return nil, err
+	}
+
+	return newsCategories, nil
+}
+
+// StoreDailyMailingCategories function is used to store user's preferences for daily mailing.
+func (m *DatabaseModel) StoreDailyMailingCategories(chatID int64, newsCategories []string) error {
+	stmt := `
+		INSERT INTO 
+		    daily_mailing_categories 
+		    (chat_id, news_categories) 
+		VALUES 
+		    ($1, $2)`
+
+	_, err := m.DB.Exec(stmt, chatID, newsCategories)
+	if err != nil {
+		return err
+	}
+
+	return nil
+}
+
+// GetAllMailingSubscrpiptedUsers function is used to get all users who subscribed to daily mailing.
+func (m *DatabaseModel) GetAllMailingSubscrpiptedUsers() ([]int64, error) {
+	stmt := `
+		SELECT 
+		    chat_id
+		FROM 
+		    daily_mailing_categories`
+	var chatIDs []int64
+	rows, err := m.DB.Query(stmt)
+	if err != nil {
+		return nil, err
+	}
+
+	for rows.Next() {
+		var chatID int64
+		err := rows.Scan(&chatID)
+		if err != nil {
+			return nil, err
+		}
+		chatIDs = append(chatIDs, chatID)
+	}
+
+	return chatIDs, nil
+}

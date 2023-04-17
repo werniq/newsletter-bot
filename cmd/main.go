@@ -1,13 +1,13 @@
 package main
 
 import (
-	"duolingo-bot/Driver"
-	"duolingo-bot/app"
-	"duolingo-bot/internal/models"
-	"duolingo-bot/logger"
 	"github.com/gin-gonic/gin"
 	tgbotapi "github.com/go-telegram-bot-api/telegram-bot-api/v5"
 	"github.com/joho/godotenv"
+	"news-bot/Driver"
+	"news-bot/app"
+	"news-bot/internal/models"
+	"news-bot/logger"
 	"os"
 )
 
@@ -28,6 +28,7 @@ func main() {
 
 	db, err := Driver.OpenDb()
 	if err != nil {
+		logger.NewLogger().Error("opening database", err)
 		return
 	}
 

@@ -1,9 +1,9 @@
 package app
 
 import (
-	"duolingo-bot/logger"
 	"fmt"
 	tgbotapi "github.com/go-telegram-bot-api/telegram-bot-api/v5"
+	"news-bot/logger"
 )
 
 // Start function is used to start the bot.

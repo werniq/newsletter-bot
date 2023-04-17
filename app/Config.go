@@ -1,16 +1,21 @@
 package app
 
 import (
-	"duolingo-bot/internal/models"
-	"duolingo-bot/logger"
 	"github.com/gin-gonic/gin"
 	tgbotapi "github.com/go-telegram-bot-api/telegram-bot-api/v5"
+	"news-bot/internal/models"
+	"news-bot/logger"
 )
 
 type Application struct {
 	Bot      *tgbotapi.BotAPI
 	Database *models.DatabaseModel
 }
+
+var (
+	uri        = "https://newsapi.org/v2/everything"
+	categories = []string{"business", "entertainment", "general", "health", "science", "sports", "technology"}
+)
 
 // NewApplication is used to create new application.
 func NewApplication(bot *tgbotapi.BotAPI, db *models.DatabaseModel) *Application {
@@ -65,9 +70,10 @@ func (app *Application) Configure(c *gin.Context) {
 			}
 		case "/news":
 			app.SearchNews(app.Bot, update)
-		case "/randomnews":
-		case "/hotnews":
-
+		case "/hotnewsus":
+			app.HotNews(app.Bot, update)
+		case "/hotnewseu":
+			app.HotNewsEu(app.Bot, update)
 		case "/sportnews":
 		case "/politicsnews":
 		case "/economicsnews":
