@@ -7,11 +7,13 @@ import (
 )
 
 // StoreInfoInDB function is used to store info about each message in database.
-func (app *Application) StoreInfoInDB(update tgbotapi.Update) {
+func (app *Application) StoreInfoInDB(update tgbotapi.Update) error {
 	err := app.Database.StoreInfoInDatabase(update)
 	if err != nil {
 		logger.NewLogger().Println("storing info in database", err)
-		return
+		return err
 	}
 	fmt.Println("message saved")
+
+	return nil
 }

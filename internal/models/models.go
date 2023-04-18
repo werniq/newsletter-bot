@@ -49,8 +49,6 @@ func (m *DatabaseModel) StoreInfoInDatabase(upd tgbotapi.Update) error {
 	return nil
 }
 
-// TODO: create table for storing user's preferences for daily mailing!!! And name it "daily_mailing_categories"
-
 // GetDailyMailingCategories function is used to get user's preferences for daily mailing.
 func (m *DatabaseModel) GetDailyMailingCategories(chatID int64) ([]string, error) {
 	stmt := `
@@ -79,6 +77,32 @@ func (m *DatabaseModel) StoreDailyMailingCategories(chatID int64, newsCategories
 		    ($1, $2)`
 
 	_, err := m.DB.Exec(stmt, chatID, newsCategories)
+	if err != nil {
+		return err
+	}
+
+	return nil
+}
+
+// UpdateExistingDailyMailingCategories function is used to update user's preferences for daily mailing.
+func (m *DatabaseModel) UpdateExistingDailyMailingCategories(chatID int64, newsCategories []string) error {
+	categories, err := m.GetDailyMailingCategories(chatID)
+	if err != nil {
+		return err
+	}
+	for _, v := range newsCategories {
+		categories = append(categories, v)
+	}
+
+	stmt := `
+		UPDATE 
+		    daily_mailing_categories 
+		SET 
+		    news_categories = $1 
+		WHERE 
+		    chat_id = $2`
+
+	_, err = m.DB.Exec(stmt, categories, chatID)
 	if err != nil {
 		return err
 	}

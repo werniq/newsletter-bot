@@ -11,6 +11,7 @@ import (
 	"time"
 )
 
+// DailyMorningMailing function is used to send daily morning mailing to all subscribed users.
 func (app *Application) DailyMorningMailing(bot *tgbotapi.BotAPI, upd tgbotapi.Update) {
 	loc, err := time.LoadLocation("EUROPE/WARSAW")
 	if err != nil {
@@ -25,8 +26,6 @@ func (app *Application) DailyMorningMailing(bot *tgbotapi.BotAPI, upd tgbotapi.U
 		logger.NewLogger().Error("getting all mailing subscribed users", err)
 		return
 	}
-
-	// TODO: add logic for sending daily news
 
 	go func() {
 		for {

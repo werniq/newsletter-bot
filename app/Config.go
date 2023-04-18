@@ -75,16 +75,23 @@ func (app *Application) Configure(c *gin.Context) {
 		case "/hotnewseu":
 			app.HotNewsEu(app.Bot, update)
 		case "/sportnews":
+			app.NewsByCategory("sport", app.Bot, update)
 		case "/politicsnews":
+			app.NewsByCategory("politics", app.Bot, update)
 		case "/economicsnews":
+			app.NewsByCategory("economics", app.Bot, update)
 		case "/scienceandtechnews":
+			app.NewsByCategory("science", app.Bot, update)
 		case "/healthnews":
+			app.NewsByCategory("health", app.Bot, update)
 		case "/entertainmentnews":
+			app.NewsByCategory("entertainment", app.Bot, update)
 		case "/travelnews":
+			app.NewsByCategory("travel", app.Bot, update)
 		case "/lifestylenews":
-
+			app.NewsByCategory("lifestyle", app.Bot, update)
 		case "/foodnews":
-
+			app.NewsByCategory("food", app.Bot, update)
 		default:
 			msg := tgbotapi.NewMessage(update.Message.Chat.ID, "I don't know that command")
 			_, err = app.Bot.Send(msg)

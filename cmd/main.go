@@ -39,7 +39,11 @@ func main() {
 	updatesChannel := bot.ListenForWebhook("http://localhost:8080/bot" + bot.Token)
 
 	for update := range updatesChannel {
-		application.StoreInfoInDB(update)
+		err = application.StoreInfoInDB(update)
+		if err != nil {
+			logger.NewLogger().Error("storing info in database", err)
+			return
+		}
 		application.Config(r)
 	}
 
