@@ -1,6 +1,10 @@
 # Newsletter Bot
 
-The Newsletter Bot is a Telegram bot that provides news recommendations and updates in different categories.
+The Newsletter Bot is a Telegram bot that provides news recommendations and updates in different categories. It also provides the following features:
+
+- Receiving daily mailings with the latest news updates.
+- Automatic news recommendations based on your preferences.
+- Receiving news updates by category.
 
 ## Available commands
 
